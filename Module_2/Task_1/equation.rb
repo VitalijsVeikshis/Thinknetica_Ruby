@@ -1,8 +1,8 @@
-print "a="
+print 'a='
 a = gets.chomp.to_f
-print "b="
+print 'b='
 b = gets.chomp.to_f
-print "c="
+print 'c='
 c = gets.chomp.to_f
 puts
 
@@ -15,5 +15,5 @@ if d > 0
 elsif d == 0
   puts "x=#{(-b / (2 * a))}"
 else
-  puts "There are no real roots."
+  puts 'There are no real roots.'
 end

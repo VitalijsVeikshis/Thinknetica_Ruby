@@ -1,6 +1,6 @@
-print "Length of a triangle base: "
+print 'Length of a triangle base: '
 triangle_base = gets.chomp.to_f
-print "Length of a triangle height: "
+print 'Length of a triangle height: '
 triangle_height = gets.chomp.to_f
 puts
 
