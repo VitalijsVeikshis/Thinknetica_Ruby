@@ -4,7 +4,7 @@ print "Length of a triangle second side: "
 b = gets.chomp.to_f
 print "Length of a triangle third side: "
 c = gets.chomp.to_f
-puts ""
+puts
 
 if a > b && a > c
   temp = c
