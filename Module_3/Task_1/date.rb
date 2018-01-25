@@ -10,4 +10,4 @@ if ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)
   months[2] = 29
 end
 
-puts months[0..(month - 1)].reduce(:+) + day
+puts "Day of year: #{months[0..(month - 1)].reduce(:+) + day}"
