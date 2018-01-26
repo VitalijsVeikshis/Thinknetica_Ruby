@@ -1,4 +1,4 @@
-basket = Hash.new
+basket = {}
 
 loop do
   print 'Product: '
@@ -18,7 +18,7 @@ puts 'Product'.ljust(15) +
      'Price'.rjust(10) +
      'Quantity'.rjust(10) +
      'Sub-total'.rjust(10)
-sub_totals = Array.new
+sub_totals = []
 basket.each do |name, property|
   sub_totals.push(property[:price] * property[:quantity])
   puts name.to_s.ljust(15) +
