@@ -8,7 +8,6 @@ class Train
     @rate = rate
     @speed = 0
 
-    @position = 0
     add_route(route)
   end
 
@@ -30,6 +29,7 @@ class Train
 
   def add_route(route)
     @route = route
+    @position = 0
     @current_station = @route.route.first
     @current_station.arrival(self)
 
