@@ -15,10 +15,10 @@ test_route.show_route
 #test_route.show_route
 puts '----------'
 
-test_trains = [Train.new(1, 'Cargo', 5, 50),
-               Train.new(2, 'Cargo', 10, 50),
-               Train.new(3,'Passenger', 10, 250),
-               Train.new(4,'Passenger', 0, 120)]
+test_trains = [Train.new(1, 'Cargo', 5, 50, test_route),
+               Train.new(2, 'Cargo', 10, 50, test_route),
+               Train.new(3,'Passenger', 10, 250, test_route),
+               Train.new(4,'Passenger', 0, 120, test_route)]
 
 puts test_trains[3].rolling_stock
 test_trains[3].connect_carriage
@@ -26,10 +26,10 @@ puts test_trains[3].rolling_stock
 test_trains[3].disconnect_carriage
 puts test_trains[3].rolling_stock
 puts '---------'
-test_trains[0].add_route(test_route)
-test_trains[1].add_route(test_route)
-test_trains[2].add_route(test_route)
-test_trains[3].add_route(test_route)
+#test_trains[0].add_route(test_route)
+#test_trains[1].add_route(test_route)
+#test_trains[2].add_route(test_route)
+#test_trains[3].add_route(test_route)
 test_trains[1].route.show_route
 
 puts '-----------'
