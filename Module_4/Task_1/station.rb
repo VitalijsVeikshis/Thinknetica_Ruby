@@ -19,8 +19,9 @@ class Station
       trains = @trains.map { |train| [train.number, train.type] }.to_h
       trains.select { |number, type| type == train_type }
     else
-      types = @trains.map { |train| train.type }
-      types.uniq.map { |train_type| [train_type, types.count(train_type)] }.to_h
+      types = @trains.map { |train| train.type }.uniq
+      types.map { |type| [type, @trains.count{ |train| train.type == type }] }
+           .to_h
     end
   end
 end
