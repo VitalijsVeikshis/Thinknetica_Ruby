@@ -14,14 +14,14 @@ class Station
     @trains.delete(train)
   end
 
-  def trains_by_type(train_type = false)
-    if train_type
-      trains = @trains.map { |train| [train.number, train.type] }.to_h
-      trains.select { |number, type| type == train_type }
-    else
-      types = @trains.map { |train| train.type }.uniq
-      types.map { |type| [type, @trains.count{ |train| train.type == type }] }
-           .to_h
-    end
+  def trains_info_by_type
+    types = @trains.map { |train| train.type }.uniq
+    types.map { |type| [type, @trains.count{ |train| train.type == type }] }
+         .to_h
+  end
+
+  def trains_by_type(train_type)
+    trains = @trains.map { |train| [train.number, train.type] }.to_h
+    trains.select { |number, type| type == train_type }
   end
 end

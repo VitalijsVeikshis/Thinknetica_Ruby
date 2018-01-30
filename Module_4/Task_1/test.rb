@@ -39,4 +39,4 @@ test_trains[1].forward
 puts '-----------'
 test_trains[1].back
 puts '-----------'
-test_stations[0].trains_by_type.each { |type| p type }
+test_stations[0].trains_by_type('Cargo').each { |type| p type }
