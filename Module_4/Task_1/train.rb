@@ -29,12 +29,11 @@ class Train
   def add_route(route)
     @route = route
     @position = 0
-    current_station = @route.route.first
     current_station.arrival(self)
   end
 
   def forward
-    if(current_station != @route.route.last)
+    if(current_station != @route.stations.last)
       current_station.departure(self)
       puts current_station.name
       puts accelerator
@@ -48,7 +47,7 @@ class Train
   end
 
   def back
-    if(current_station != @route.route.first)
+    if(current_station != @route.stations.first)
       current_station.departure(self)
       puts current_station.name
       puts accelerator
@@ -62,14 +61,14 @@ class Train
   end
 
   def next_station
-    @route.route[@position + 1] if @position + 1 < @route.route.length
+    @route.stations[@position + 1] if @position + 1 < @route.stations.length
   end
 
   def previous_station
-    @route.route[@position - 1] if @position - 1 > 0
+    @route.stations[@position - 1] if @position - 1 > 0
   end
 
   def current_station
-    @route.route[@position]
+    @route.stations[@position]
   end
 end
