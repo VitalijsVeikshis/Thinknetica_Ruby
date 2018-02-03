@@ -1,10 +1,3 @@
-require_relative 'station'
-require_relative 'route'
-require_relative 'cargo_train'
-require_relative 'passenger_train'
-require_relative 'cargo_carriage'
-require_relative 'passenger_carriage'
-
 class Railway
   attr_reader :trains, :routes, :stations
 
@@ -40,19 +33,19 @@ class Railway
   def route_all
     puts 'Number'.ljust(10) +
          'Route name'
-    @routes.each { |route| puts "#{route.number}".ljust(10) + "#{route.name}" }
+    @routes.each { |route| puts route.number.to_s.ljust(10) + route.name.to_s }
   end
 
   def train_all(list = @trains)
     puts 'Number'.ljust(10) +
          'Route'.ljust(20) +
-         'Type'.ljust(10) +
+         'Type'.ljust(15) +
          'Roolling stock'
     list.each do |train|
-      puts "#{train.number}".ljust(10) +
-           "#{train.route.name}".ljust(20) +
-           "#{train.type}".ljust(10) +
-           "#{train.rolling_stock.size}"
+      puts train.number.to_s.ljust(10) +
+           train.route.name.to_s.ljust(20) +
+           train.class.to_s.ljust(15) +
+           train.rolling_stock.size.to_s
     end
   end
 

@@ -1,5 +1,5 @@
 class Train
-  attr_reader :speed, :rate, :type, :number, :route, :rolling_stock,
+  attr_reader :speed, :rate, :number, :route, :rolling_stock,
               :previous_station, :current_station, :next_station
 
   @@trains_count = 0
@@ -13,16 +13,12 @@ class Train
     add_route(route)
   end
 
-  def connect_carriage
-    @rolling_stock << carriage if @speed == 0
+  def connect_carriage(carriage)
+    @rolling_stock << carriage if @speed.zero?
   end
 
   def disconnect_carriage
-    @rolling_stock.pop if @speed == 0 && @rolling_stock.size > 0
-  end
-
-  def type
-    'Train'
+    @rolling_stock.pop if @speed.zero? && @rolling_stock.size > 0
   end
 
   def add_route(route)
@@ -57,13 +53,6 @@ class Train
     else
       puts 'Train can move only forward!'
     end
-  end
-
-  #I don't use these method outside class
-  protected
-
-  def carriage
-    Carriage.new
   end
 
   #I don't use these methods outside class

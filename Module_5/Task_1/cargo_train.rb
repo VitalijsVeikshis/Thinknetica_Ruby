@@ -2,13 +2,8 @@ require_relative 'train'
 require_relative 'cargo_carriage'
 
 class CargoTrain < Train
-  def type
-    'Cargo'
-  end
 
-  protected
-
-  def carriage
-    CargoCarriage.new
+  def connect_carriage(carriage)
+    @rolling_stock << carriage if @speed.zero? && CargoCarriage === carriage
   end
 end
