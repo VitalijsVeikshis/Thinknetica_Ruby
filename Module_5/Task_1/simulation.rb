@@ -62,7 +62,8 @@ class Simulation
       command = gets.chomp.downcase.split(' ')
       case command.first
       when 'add'
-        railway.add_route(Route.new(railway.find_station(command[1]), railway.find_station(command.last)))
+        railway.add_route(Route.new(railway.find_station(command[1]),
+                          railway.find_station(command.last)))
       when 'select'
         route_select(command.last.to_i, railway)
       when 'all'

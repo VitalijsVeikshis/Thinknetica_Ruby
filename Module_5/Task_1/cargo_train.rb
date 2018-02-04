@@ -4,6 +4,6 @@ require_relative 'cargo_carriage'
 class CargoTrain < Train
 
   def connect_carriage(carriage)
-    @rolling_stock << carriage if @speed.zero? && CargoCarriage === carriage
+    super(carriage) if carriage.is_a?(CargoCarriage)
   end
 end
