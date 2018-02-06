@@ -1,0 +1,37 @@
+require_relative 'instance_counter'
+require_relative 'search_engine'
+
+class Station
+  include InstanceCounter
+  include SearchEngine
+
+  attr_reader :id, :trains
+
+  def self.all
+    ObjectSpace.each_object(self).to_a
+  end
+
+  def initialize(id)
+    @id = id
+    @trains = []
+  end
+
+  def arrival(train)
+    @trains << train
+  end
+
+  def departure(train)
+    @trains.delete(train)
+  end
+
+  def trains_info_by_type
+    types = @trains.map { |train| train.class }.uniq
+    types.map { |type| [type, @trains.count{ |train| train.class == type }] }
+         .to_h
+  end
+
+  def trains_by_type(train_type)
+    trains = @trains.map { |train| [train.id, train.class] }.to_h
+    trains.select { |number, type| type.casecmp(train_type) == 0 }
+  end
+end
