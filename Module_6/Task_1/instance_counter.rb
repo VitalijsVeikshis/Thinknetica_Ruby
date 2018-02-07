@@ -5,20 +5,21 @@ module InstanceCounter
   end
 
   module ClassMethods
-    def instances
-      ObjectSpace.each_object(self).to_a.size
+    attr_reader :counter
+
+    private
+
+    def increase_counter
+      @counter ||= 0
+      @counter += 1
     end
   end
 
   module InstanceMethods
-    attr_reader :quantity
-
-    @@quantity = 0
-
     private
 
     def register_instance
-      @@quantity += 1
+      self.class.send :increase_counter
     end
   end
 end

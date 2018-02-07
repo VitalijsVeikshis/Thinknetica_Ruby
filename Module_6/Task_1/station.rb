@@ -1,19 +1,25 @@
 require_relative 'instance_counter'
-require_relative 'search_engine'
 
 class Station
   include InstanceCounter
-  include SearchEngine
 
   attr_reader :id, :trains
 
+  @@stations = []
+
   def self.all
-    ObjectSpace.each_object(self).to_a
+    @@stations
+  end
+
+  def self.find(id)
+    @@stations.find { |station| station.id == id }
   end
 
   def initialize(id)
     @id = id
     @trains = []
+    @@stations << self
+    register_instance
   end
 
   def arrival(train)

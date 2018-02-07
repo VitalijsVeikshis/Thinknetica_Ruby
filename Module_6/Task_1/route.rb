@@ -1,17 +1,22 @@
 require_relative 'instance_counter'
-require_relative 'search_engine'
 
 class Route
   include InstanceCounter
-  include SearchEngine
 
   attr_reader :stations, :id, :name
+
+  @@routes = []
+
+  def self.find(id)
+    @@routes.find { |route| route.id == id }
+  end
 
   def initialize(initial_station, terminal_station)
     @stations = [initial_station, terminal_station]
     @name = "#{initial_station.id}-#{terminal_station.id}"
     register_instance
-    @id = @@quantity
+    @@routes << self
+    @id = self.class.counter
   end
 
   def add_station(station, order = -2)

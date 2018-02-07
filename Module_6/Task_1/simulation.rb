@@ -44,9 +44,9 @@ class Simulation
       when 'add'
         railway.add_station(Station.new(command.last))
       when 'report'
-        railway.station_report(command.last)
+        show_trains(Station.find(command.last).trains)
       when 'all'
-        railway.station_all
+        show_stations(railway.stations)
       when 'exit'
         break
       else
@@ -65,9 +65,9 @@ class Simulation
         railway.add_route(Route.new(Station.find(command[1]),
                           Station.find(command.last)))
       when 'select'
-        route_select(command.last.to_i, railway)
+        route_select(command.last.to_i)
       when 'all'
-        railway.route_all
+        show_routes(railway.routes)
       when 'exit'
         break
       else
@@ -77,7 +77,7 @@ class Simulation
     end
   end
 
-  def route_select(route_number, railway)
+  def route_select(route_number)
     route = Route.find(route_number)
     loop do
       print "Simulation > Route > #{route_number} > "
@@ -112,9 +112,9 @@ class Simulation
           railway.add_train(CargoTrain.new(command[2], command[3].to_i, route))
         end
       when 'select'
-        train_select(command.last, railway)
+        train_select(command.last)
       when 'all'
-        railway.train_all
+        show_trains(railway.trains)
       when 'exit'
         break
       else
@@ -124,7 +124,7 @@ class Simulation
     end
   end
 
-  def train_select(train_number, railway)
+  def train_select(train_number)
     train = Train.find(train_number)
     loop do
       print "Simulation > Train > #{train_number} > "
@@ -151,6 +151,29 @@ class Simulation
         @menu.train_menu
       end
       break if command.join('').casecmp('exit') == 0
+    end
+  end
+
+  def show_stations(stations)
+    stations.each { |station| puts station.id }
+  end
+
+  def show_routes(routes)
+    puts 'Number'.ljust(10) +
+         'Route name'
+    routes.each { |route| puts route.id.to_s.ljust(10) + route.name.to_s }
+  end
+
+  def show_trains(trains)
+    puts 'Number'.ljust(10) +
+         'Route'.ljust(20) +
+         'Type'.ljust(15) +
+         'Roolling stock'
+    trains.each do |train|
+      puts train.id.to_s.ljust(10) +
+           train.route.name.to_s.ljust(20) +
+           train.class.to_s.ljust(15) +
+           train.rolling_stock.size.to_s
     end
   end
 end

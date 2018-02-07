@@ -1,22 +1,27 @@
 require_relative 'manufacturer'
 require_relative 'instance_counter'
-require_relative 'search_engine'
 
 class Train
   include Manufacturer
   include InstanceCounter
-  include SearchEngine
 
   attr_reader :speed, :rate, :id, :route, :rolling_stock,
               :previous_station, :current_station, :next_station
+
+  @@trains = []
+
+  def self.find(id)
+    @@trains.find { |train| train.id == id }
+  end
 
   def initialize(id, rate, route)
     @id = id
     @rate = rate
     @speed = 0
     @rolling_stock = []
-    register_instance
+    @@trains << self
     add_route(route)
+    register_instance
   end
 
   def connect_carriage(carriage)
