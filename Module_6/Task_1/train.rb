@@ -11,7 +11,7 @@ class Train
   @@trains = {}
 
   def self.all
-    @@trains
+    @@trains.values
   end
 
   def self.find(id)

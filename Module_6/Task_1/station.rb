@@ -8,7 +8,7 @@ class Station
   @@stations = {}
 
   def self.all
-    @@stations
+    @@stations.values
   end
 
   def self.find(id)

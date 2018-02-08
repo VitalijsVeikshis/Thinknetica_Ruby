@@ -8,7 +8,7 @@ class Route
   @@routes = {}
 
   def self.all
-    @@routes
+    @@routes.values
   end
 
   def self.find(id)
