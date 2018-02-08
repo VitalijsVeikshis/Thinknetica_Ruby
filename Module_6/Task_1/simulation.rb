@@ -4,12 +4,10 @@ require_relative 'cargo_train'
 require_relative 'passenger_train'
 require_relative 'cargo_carriage'
 require_relative 'passenger_carriage'
-require_relative 'railway'
 require_relative 'menu'
 
 class Simulation
   def initialize
-    @railway = Railway.new
     @menu = Menu.new
   end
 
@@ -20,11 +18,11 @@ class Simulation
       command = gets.chomp.downcase
       case command
       when 'station'
-        station(@railway)
+        station
       when 'route'
-        route(@railway)
+        route
       when 'train'
-        train(@railway)
+        train
       when 'exit'
         break
       else
@@ -36,17 +34,17 @@ class Simulation
 
   private
 
-  def station(railway)
+  def station
     loop do
       print 'Simulation > Station > '
       command = gets.chomp.downcase.split(' ')
       case command.first
       when 'add'
-        railway.add_station(Station.new(command.last))
+        Station.new(command.last)
       when 'report'
         show_trains(Station.find(command.last).trains)
       when 'all'
-        show_stations(railway.stations)
+        show_stations(Station.all)
       when 'exit'
         break
       else
@@ -56,18 +54,17 @@ class Simulation
     end
   end
 
-  def route(railway)
+  def route
     loop do
       print 'Simulation > Route > '
       command = gets.chomp.downcase.split(' ')
       case command.first
       when 'add'
-        railway.add_route(Route.new(Station.find(command[1]),
-                          Station.find(command.last)))
+        Route.new(Station.find(command[1]), Station.find(command.last))
       when 'select'
         route_select(command.last.to_i)
       when 'all'
-        show_routes(railway.routes)
+        show_routes(Route.all)
       when 'exit'
         break
       else
@@ -98,7 +95,7 @@ class Simulation
     end
   end
 
-  def train(railway)
+  def train
     loop do
       print 'Simulation > Train > '
       command = gets.chomp.downcase.split(' ')
@@ -107,14 +104,14 @@ class Simulation
         route = Route.find(command.last.to_i)
         case command[1]
         when 'passenger'
-          railway.add_train(PassengerTrain.new(command[2], command[3].to_i, route))
+          PassengerTrain.new(command[2], command[3].to_i, route)
         when 'cargo'
-          railway.add_train(CargoTrain.new(command[2], command[3].to_i, route))
+          CargoTrain.new(command[2], command[3].to_i, route)
         end
       when 'select'
         train_select(command.last)
       when 'all'
-        show_trains(railway.trains)
+        show_trains(Train.all)
       when 'exit'
         break
       else
