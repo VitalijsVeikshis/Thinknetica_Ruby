@@ -5,18 +5,22 @@ class Route
 
   attr_reader :stations, :id, :name
 
-  @@routes = []
+  @@routes = {}
+
+  def self.all
+    @@routes
+  end
 
   def self.find(id)
-    @@routes.find { |route| route.id == id }
+    @@routes[id]
   end
 
   def initialize(initial_station, terminal_station)
     @stations = [initial_station, terminal_station]
     @name = "#{initial_station.id}-#{terminal_station.id}"
     register_instance
-    @@routes << self
     @id = self.class.counter
+    @@routes[@id] = self
   end
 
   def add_station(station, order = -2)

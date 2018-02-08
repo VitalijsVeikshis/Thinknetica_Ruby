@@ -5,20 +5,20 @@ class Station
 
   attr_reader :id, :trains
 
-  @@stations = []
+  @@stations = {}
 
   def self.all
     @@stations
   end
 
   def self.find(id)
-    @@stations.find { |station| station.id == id }
+    @@stations[id]
   end
 
   def initialize(id)
     @id = id
     @trains = []
-    @@stations << self
+    @@stations[id] = self
     register_instance
   end
 

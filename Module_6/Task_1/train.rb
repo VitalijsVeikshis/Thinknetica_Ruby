@@ -8,10 +8,14 @@ class Train
   attr_reader :speed, :rate, :id, :route, :rolling_stock,
               :previous_station, :current_station, :next_station
 
-  @@trains = []
+  @@trains = {}
+
+  def self.all
+    @@trains
+  end
 
   def self.find(id)
-    @@trains.find { |train| train.id == id }
+    @@trains[id]
   end
 
   def initialize(id, rate, route)
@@ -19,7 +23,7 @@ class Train
     @rate = rate
     @speed = 0
     @rolling_stock = []
-    @@trains << self
+    @@trains[id] = self
     add_route(route)
     register_instance
   end
