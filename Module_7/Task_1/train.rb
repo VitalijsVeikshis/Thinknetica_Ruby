@@ -95,7 +95,7 @@ class Train
   end
 
   def validate!
-    raise StandardError.new('Invalid train number (XXX-XX/XXXXX)') if id.nil? || id !~ NUMBER_FORMAT
+    raise StandardError.new('Invalid train number: XXX-XX/XXXXX') if id.nil? || id !~ NUMBER_FORMAT
     raise StandardError.new('Invalid rate') if rate.nil? || rate <= 0
     raise StandardError.new('Invalid route') if  route.nil?
     true

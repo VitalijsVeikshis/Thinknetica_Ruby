@@ -109,18 +109,7 @@ class Simulation
       command = gets.chomp.downcase.split(' ')
       case command.shift
       when 'add'
-        case command.shift
-        when 'passenger'
-          PassengerTrain.new(command.shift,
-                             command.shift.to_i,
-                             Route.find(command.shift.to_i))
-        when 'cargo'
-          CargoTrain.new(command.shift,
-                         command.shift.to_i,
-                         Route.find(command.shift.to_i))
-        else
-          @menu.train_menu
-        end
+        train_add(command)
       when 'select'
         train_select(command.shift)
       when 'all'
@@ -166,6 +155,23 @@ class Simulation
     rescue StandardError => e
       puts e.message
     end
+  end
+
+  def train_add(command)
+    type = command.shift
+    number = command.shift
+    rate = command.shift.to_i
+    route = command.shift.to_i
+    case type
+    when 'passenger'
+      PassengerTrain.new(number, rate, Route.find(route))
+    when 'cargo'
+      CargoTrain.new(number, rate, Route.find(route))
+    else
+      raise StandardError.new('Invalid train type: <passenger/cargo>')
+    end
+    puts "Train is ready: type - #{type}, number - #{number}, " +
+         "top speed - #{rate}, route - #{route}."
   end
 
   def show_stations(stations)
