@@ -12,8 +12,6 @@ class Simulation
   end
 
   def run
-    #Station.new('st1')
-    #Station.new('st1')
     @menu.main_menu
     loop do
       print 'Simulation > '

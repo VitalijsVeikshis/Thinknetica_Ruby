@@ -20,8 +20,9 @@ class Route
   end
 
   def initialize(initial_station, terminal_station)
-    @stations = [initial_station, terminal_station]
-    validate!
+    @stations = []
+    add_station(initial_station, 0)
+    add_station(terminal_station, 1)
     @name = "#{initial_station.id}-#{terminal_station.id}"
     register_instance
     @id = self.class.counter
@@ -29,7 +30,7 @@ class Route
   end
 
   def add_station(station, order = -2)
-    @stations.insert(order, station)
+    @stations.insert(order, station) if validate(station)
   end
 
   def delete_station(station)
@@ -45,7 +46,14 @@ class Route
   private
 
   def validate!
-    raise StandardError.new('Invalid station') if stations.include?(nil)
+    unless stations.all? { |station| station.is_a?(Station) }
+      raise StandardError.new('Invalid station')
+    end
+    true
+  end
+
+  def validate(station)
+    raise StandardError.new('Invalid station') unless station.is_a?(Station)
     true
   end
 end

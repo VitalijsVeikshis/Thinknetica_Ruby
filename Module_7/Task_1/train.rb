@@ -34,7 +34,8 @@ class Train
   end
 
   def connect_carriage(carriage)
-    @rolling_stock << carriage if @speed.zero?
+     raise StandardError('Invalid carriage') unless carriage.is_a?(Carriage)
+     @rolling_stock << carriage if @speed.zero?
   end
 
   def disconnect_carriage
