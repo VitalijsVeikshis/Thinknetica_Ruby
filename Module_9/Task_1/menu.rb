@@ -1,5 +1,5 @@
 TAB1 = 11
-TAB2 = 35
+TAB2 = 34
 ALL = [
   '> all',
   '< exit'
@@ -14,16 +14,16 @@ STATION = [
 ].freeze
 ROUTE = [
   '> add <initial_station> <terminal_station>',
-  '> select <route number> > add <station_name>'
+  '> chose <route number> > add <station_name>'
 ].freeze
-ROUTE_SELECT = [
+ROUTE_CHOSE = [
   '> delete <station_number>'
 ].freeze
 TRAIN = [
   '> add <passenger/cargo> <train_number> <speed> <route_number>',
-  '> select <train_number> > connect <passenger/cargo> <capacity>'
+  '> chose <train_number> > connect <passenger/cargo> <capacity>'
 ].freeze
-TRAIN_SELECT = [
+TRAIN_CHOSE = [
   '> disconnect',
   '> fill <carriage_number> <amount>',
   '> forward', '> back',
@@ -54,9 +54,9 @@ class Menu
       info: SubMenu.new(head: '', indent: TAB2, items: INFO),
       station: SubMenu.new(head: 'station ', indent: TAB1, items: STATION),
       route: SubMenu.new(head: 'route ', indent: TAB1, items: ROUTE),
-      route_select: SubMenu.new(head: '', indent: TAB2, items: ROUTE_SELECT),
+      route_chose: SubMenu.new(head: '', indent: TAB2, items: ROUTE_CHOSE),
       train: SubMenu.new(head: 'train ', indent: TAB1, items: TRAIN),
-      train_select: SubMenu.new(head: '', indent: TAB2, items: TRAIN_SELECT)
+      train_chose: SubMenu.new(head: '', indent: TAB2, items: TRAIN_CHOSE)
     }
   end
 
@@ -74,23 +74,23 @@ class Menu
 
   def route_menu
     @menu_items[:route].show
-    route_select_menu
+    route_chose_menu
     @menu_items[:all].show
   end
 
-  def route_select_menu
-    @menu_items[:route_select].show
+  def route_chose_menu
+    @menu_items[:route_chose].show
     @menu_items[:info].show
   end
 
   def train_menu
     @menu_items[:train].show
-    train_select_menu
+    train_chose_menu
     @menu_items[:all].show
   end
 
-  def train_select_menu
-    @menu_items[:train_select].show
+  def train_chose_menu
+    @menu_items[:train_chose].show
     @menu_items[:info].show
   end
 end

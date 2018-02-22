@@ -1,22 +1,11 @@
 module Actions
   class RouteSelectActions < Action
-    include Actions
+    attr_reader :helper, :header
 
     def initialize(header, route)
       @header = "#{header}#{route.id} > "
       @helper = proc { Menu.new.route_menu }
       @route = route
-      @actions = actions_list
-    end
-
-    private
-
-    def actions_list
-      {
-        add: proc { |params| add(params) },
-        delete: proc { |params| delete(params) },
-        info: proc { info }
-      }
     end
 
     def add(name)
@@ -27,7 +16,7 @@ module Actions
       @route.delete_station(Station.find(name.shift))
     end
 
-    def info
+    def info(*)
       puts 'Stations'
       @route.stations.each { |station| puts station.id }
     end

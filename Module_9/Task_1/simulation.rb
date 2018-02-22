@@ -1,29 +1,51 @@
-require_relative 'station'
-require_relative 'route'
-require_relative 'cargo_train'
-require_relative 'passenger_train'
-require_relative 'cargo_carriage'
-require_relative 'passenger_carriage'
-require_relative 'menu'
 require_relative 'actions'
-require_relative 'action'
 
-class Simulation < Action
+class Simulation
   include Actions
 
-  def initialize(header)
-    @header = header
-    @helper = proc { Menu.new.main_menu }
-    @actions = actions_list
+  def initialize(root)
+    @actions = []
+    @actions << root
+  end
+
+  def run
+    @actions.first.helper.call
+    process_task(@actions.pop)
   end
 
   private
 
-  def actions_list
-    {
-      station: proc { StationActions.new("#{@header}Station > ").run },
-      route: proc { RouteActions.new("#{@header}Route > ").run },
-      train: proc { TrainActions.new("#{@header}Train > ").run }
-    }
+  def exit?(action)
+    action.join('').casecmp('exit').zero? ? true : false
+  end
+
+  def receive_task(task)
+    print task.header
+    gets.chomp.downcase.split(' ')
+  end
+
+  def call_task(action)
+    task = receive_task(action)
+    return @actions.pop if exit?(task)
+    new_action = action.public_send(task.shift.to_sym, task)
+    if new_action.is_a?(Action)
+      @actions << action
+      new_action
+    else
+      action
+    end
+  end
+
+  def process_task(action)
+    loop do
+      begin
+        action = call_task(action)
+        break if action.nil?
+      rescue NoMethodError
+        action.helper.call
+      rescue StandardError => e
+        puts e.message
+      end
+    end
   end
 end

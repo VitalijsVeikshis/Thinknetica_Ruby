@@ -2,25 +2,12 @@ module Actions
   class TrainSelectActions < Action
     include Actions
 
+    attr_reader :helper, :header
+
     def initialize(header, train)
       @header = "#{header}#{train.id} > "
       @helper = proc { Menu.new.train_menu }
       @train = train
-      @actions = actions_list
-    end
-
-    private
-
-    def actions_list
-      {
-        connect: proc { |params| connect(params) },
-        disconnect: proc { @train.disconnect_carriage },
-        fill: proc { |params| fill(params) },
-        forward: proc { @train.forward },
-        back: proc { @train.back },
-        assign: proc { |params| assign(params) },
-        info: proc { info }
-      }
     end
 
     def connect(params)
@@ -34,15 +21,27 @@ module Actions
       end
     end
 
+    def disconnect(*)
+      @train.disconnect
+    end
+
     def fill(params)
       @train.select_carriage(params.shift.to_i).fill(params.shift.to_i)
+    end
+
+    def forward(*)
+      @train.forward
+    end
+
+    def back(*)
+      @train.back
     end
 
     def assign(params)
       @train.add_route(Route.find(params.shift.to_i))
     end
 
-    def info
+    def info(*)
       puts 'Number'.ljust(8) +
            'Type'.ljust(11) +
            'Used'.ljust(16) +
@@ -51,6 +50,8 @@ module Actions
         carriage_info(carriage)
       end
     end
+
+    private
 
     def carriage_info(carriage)
       puts carriage.number.to_s.ljust(8) +

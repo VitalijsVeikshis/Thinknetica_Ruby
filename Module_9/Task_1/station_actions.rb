@@ -1,23 +1,10 @@
-require_relative 'action'
-
 module Actions
   class StationActions < Action
-    include Actions
+    attr_reader :helper, :header
 
     def initialize(header)
       @header = header
       @helper = proc { Menu.new.station_menu }
-      @actions = actions_list
-    end
-
-    private
-
-    def actions_list
-      {
-        add: proc { |params| add(params) },
-        report: proc { |params| report(params) },
-        all: proc { all }
-      }
     end
 
     def add(name)
@@ -28,9 +15,11 @@ module Actions
       show_trains_on_station(Station.find(name.shift))
     end
 
-    def all
+    def all(*)
       Station.all.each { |station| puts station.id }
     end
+
+    private
 
     def show_trains_on_station(station)
       puts 'Number'.ljust(10) +

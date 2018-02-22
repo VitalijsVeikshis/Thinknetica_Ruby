@@ -1,25 +1,10 @@
-require_relative 'action'
-
 module Actions
   class TrainActions < Action
-    include Actions
+    attr_reader :helper, :header
 
     def initialize(header)
       @header = header
       @helper = proc { Menu.new.train_menu }
-      @actions = actions_list
-    end
-
-    private
-
-    def actions_list
-      {
-        add: proc { |params| add(params) },
-        select: proc do |params|
-          TrainSelectActions.new(@header, select_item(params)).run
-        end,
-        all: proc { all }
-      }
     end
 
     def add(params)
@@ -32,6 +17,22 @@ module Actions
            "top speed - #{rate}, route - #{route}."
     end
 
+    def chose(train)
+      TrainSelectActions.new(@header, Train.find(train.shift))
+    end
+
+    def all(*)
+      puts 'Number'.ljust(10) +
+           'Route'.ljust(20) +
+           'Type'.ljust(11) +
+           'Roolling stock'
+      Train.all.each do |train|
+        train_info(train)
+      end
+    end
+
+    private
+
     def train_by_type(type, number, rate, route)
       case type
       when 'passenger'
@@ -40,20 +41,6 @@ module Actions
         CargoTrain.new(id: number, rate: rate, route: Route.find(route))
       else
         raise StandardError, 'Invalid train type: <passenger/cargo>'
-      end
-    end
-
-    def select_item(train)
-      Train.find(train.shift)
-    end
-
-    def all
-      puts 'Number'.ljust(10) +
-           'Route'.ljust(20) +
-           'Type'.ljust(15) +
-           'Roolling stock'
-      Train.all.each do |train|
-        train_info(train)
       end
     end
 

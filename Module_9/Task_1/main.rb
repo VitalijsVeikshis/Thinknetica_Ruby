@@ -1,3 +1,3 @@
 require_relative 'simulation'
 
-Simulation.new('Simulation > ').run
+Simulation.new(Actions::MainActions.new('Simulation > ')).run
