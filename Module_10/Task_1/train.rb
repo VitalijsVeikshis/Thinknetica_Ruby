@@ -87,7 +87,7 @@ class Train
     @rolling_stock.each { |carriage| yield(carriage) }
   end
 
-  def get_type
+  def type_get
     self.class.to_s[0..-6]
   end
 

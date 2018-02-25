@@ -56,7 +56,7 @@ module Validation
       hash_value = get_class_value(hash_name)
       key = get_instance_value(kye_name)
       if hash_value.include?(key) && !hash_value[key].equal?(self)
-        raise StandardError, "#{var_name2} already is used"
+        raise StandardError, "#{kye_name} already is used"
       end
       true
     end
@@ -66,7 +66,7 @@ module Validation
     end
 
     def get_class_value(var_name)
-      self.class.send(:class_variable_get, "@@#{var_name}".to_sym)
+      self.class.class_variable_get("@@#{var_name}".to_sym)
     end
   end
 end

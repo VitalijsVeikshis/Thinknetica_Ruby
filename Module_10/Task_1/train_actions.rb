@@ -47,7 +47,7 @@ module Actions
     def train_info(train)
       puts train.id.to_s.ljust(10) +
            train.route.name.ljust(20) +
-           train.get_type.ljust(11) +
+           train.type_get.ljust(11) +
            train.rolling_stock.size.to_s
     end
   end

@@ -16,7 +16,7 @@ class Carriage
     @capacity - @used
   end
 
-  def get_type
+  def type_get
     self.class.to_s[0..-9]
   end
 end

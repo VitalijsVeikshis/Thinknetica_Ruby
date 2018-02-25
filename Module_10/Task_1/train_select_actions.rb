@@ -55,7 +55,7 @@ module Actions
 
     def carriage_info(carriage)
       puts carriage.number.to_s.ljust(8) +
-           carriage.get_type.ljust(11) +
+           carriage.type_get.ljust(11) +
            carriage.used.to_s.ljust(16) +
            carriage.remain.to_s
     end
